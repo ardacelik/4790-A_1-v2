@@ -1,4 +1,5 @@
 import java.net.*;
+import java.util.ArrayList;
 import java.io.*;
  
 public class Server {
@@ -30,6 +31,9 @@ public class Server {
 }
 
 class Connection extends Thread {
+    ArrayList<String> fallClasses = new ArrayList<String>();
+    ArrayList<String> winterClasses = new ArrayList<String>();
+
     private Socket client = null;
     private PrintWriter out = null;
     private BufferedReader in = null;
@@ -64,6 +68,29 @@ class Connection extends Thread {
         String courses[] = null;
         String successMessage = null;
         try {
+            while(true) {
+                semester = ois.readUTF();
+                if(semester.equals("Fall")) {
+                    fallClasses.add("COMM 1050U - Technical Communications");
+                    fallClasses.add("ENGR 1015U - Introduction to Engineering");
+                    fallClasses.add("MATH 1010U - Calculus I");
+                    fallClasses.add("MATH 1850U - Linear Algebra for Engineers");
+                    fallClasses.add("PHY 1010U - Physics I");
+                    oos.writeObject(fallClasses);
+                } else if(semester.equals("Winter")) {
+                    winterClasses.add("CHEM 1800U - Chemistry for Engineers");
+                    winterClasses.add("ENGR 1025U - Engineering Design");
+                    winterClasses.add("ENGR 1200U - Introduction to Programming for Engineers");
+                    winterClasses.add("MATH 1020U - Calculus II");
+                    winterClasses.add("PHY 1020U - Physics II");
+                    winterClasses.add("SSCI 1470U - Impact of Science and Technology on Society");
+                    oos.writeObject(winterClasses);
+                } else {
+                    continue;
+                }
+                break;
+            }
+            
             x = (Student) ois.readObject();
             studentId = x.getStudentId();
             semester = x.getSemester();
