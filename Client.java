@@ -47,7 +47,7 @@ public class Client {
             Student student = new Student();
             student.setStudentId(studentId);
 
-            System.out.println("Welcome " + studentId + ". Now please select the semester to see what classes are offered (Type Fall or Winter): ");
+            //System.out.println("Welcome " + studentId + ". Now please select the semester to see what classes are offered (Type Fall or Winter): ");
             while(true) {
                 semester = usrIn.next();
                 if(!semester.equals("Fall") && !semester.equals("Winter")) {
