@@ -65,7 +65,7 @@ class Connection extends Thread {
         //Student y = null;
         String studentId = null;
         String semester = null;
-        String courses[] = null;
+        ArrayList<String> courses = null;
         String successMessage = null;
         try {
             while(true) {
@@ -101,14 +101,14 @@ class Connection extends Thread {
             successMessage = x.notifySuccessfullRegistration();
             oos.writeUTF(successMessage);
             oos.flush();
-            ois.close();
-            oos.close();
             System.out.println(successMessage);
             System.out.println("Student ID: " + studentId);
             System.out.println("Semester: " + semester);
-            for(int i = 0; i < courses.length; i++) {
-                System.out.println(courses[i]);
+            for(int i = 0; i < courses.size(); i++) {
+                System.out.println(courses.get(i));
             }
+            ois.close();
+            oos.close();
             client.close(); 
          } catch(Exception e) {
             System.out.println("Exception caught...");

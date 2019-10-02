@@ -100,31 +100,21 @@ public class Client {
                     System.out.println(i + "." + offeredCourses.get(i).toString() + "\n");
                 }
                 System.out.println(registeredCourses);
-                System.out.println("Done");
             }
-
-
+            student.setCourses(registeredCourses);
+            oos.writeObject(student);
+            oos.flush();
+            successMessage = ois.readLine();
+            System.out.println(successMessage);
+            System.out.println("Student ID: " + studentId);
+            System.out.println("Semester: " + semester);
+            for(int i = 0; i < registeredCourses.size(); i++) {
+                System.out.println(registeredCourses.get(i));
+            }
             
-            // out.println(year);
-            // System.out.println("You entered: " + year + " as your year.\nNow please select the semester by typing either 1 or 2 on the console: \n");
+            oos.close();
+            ois.close();
             
-            // Student student = new Student();
-            // so1.setStudentId(studentId);
-            // so1.setSemester(semester);
-            // so1.setCourses(courses);
-
-            // oos.writeObject(so1);
-            // oos.flush();
-
-            // successMessage = ois.readLine();
-
-            // System.out.println(successMessage);
-            // System.out.println("Student ID: " + studentId);
-            // System.out.println("Semester: " + semester);
-            // System.out.println("Courses: " + courses);
-
-            // oos.close();
-            // ois.close();
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
             System.exit(1);

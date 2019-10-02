@@ -4,7 +4,7 @@ import java.util.*;
 public class Student implements Serializable {
    String studentId = null;
    String semester = null;
-   String courses[] = null;
+   ArrayList<String> courses = null;
 
    public Student() {
    }
@@ -17,7 +17,8 @@ public class Student implements Serializable {
        this.semester = semester;
    }
 
-   public void setCourses(String courses[]) {
+   public void setCourses(ArrayList<String> courses) {
+       this.courses = new ArrayList<String>();
        this.courses = courses;
    }
 
@@ -29,7 +30,7 @@ public class Student implements Serializable {
        return semester;
    }
 
-   public String[] getCourses() {
+   public ArrayList<String> getCourses() {
        return courses;
    }
 
