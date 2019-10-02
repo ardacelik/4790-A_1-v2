@@ -21,9 +21,12 @@ public class Client {
 
         String studentId;
         String semester;
-        String registeredCourses[];
+        ArrayList<String> registeredCourses = new ArrayList<String>();
         ArrayList<String> offeredCourses = new ArrayList<String>();
         String successMessage;
+        boolean isRegistrationComplete = false;
+        int selectOfferedClass;
+        String courseToRegister = null;
 
         try {
             Socket socket = new Socket(hostName, portNumber);
@@ -58,18 +61,46 @@ public class Client {
             }
 
             student.setSemester(semester);
-            oos.writeUTF(semester);
+            out.println(semester);
             System.out.println("You are registering for the " + semester + " semester.\nHere is the list of courses offered in " + semester + ":\n");
             offeredCourses = (ArrayList) ois.readObject();
-            // while(offeredCourses.size() == 0) {
-                
-            //     if(offeredCourses.size() < 7) {
-            //         continue;
-            //     }
-            //     break;
-            // }
+
             for(int i = 0; i < offeredCourses.size(); i++) {
                 System.out.println(i + "." + offeredCourses.get(i).toString() + "\n");
+            }
+
+            while(isRegistrationComplete == false) {
+                if(registeredCourses.size() == offeredCourses.size()) {
+                    System.out.println("You are registered for all your " + semester + " classes! Your registration process is now complete");
+                    isRegistrationComplete = true;
+                    break;
+                }
+                System.out.println("\nPlease enter the class you would like to register by typing 0 - " + (offeredCourses.size() - 1));
+                selectOfferedClass = usrIn.nextInt();
+                if((selectOfferedClass > offeredCourses.size() - 1) || (selectOfferedClass < 0)) {
+                    System.out.println("Invalid input. Please only enter a number between 0 - " + (offeredCourses.size() - 1));
+                    continue;
+                    
+                }
+                courseToRegister = offeredCourses.get(selectOfferedClass);
+                if(registeredCourses.contains(courseToRegister)) {
+                    System.out.println("You are already in this class! Please try another one");
+                    continue;
+                }
+                registeredCourses.add(courseToRegister);
+                System.out.println(registeredCourses);
+                System.out.println("You registered for " + courseToRegister + ". Would you like to register for another class? Enter 1 for Yes, 0 for No\n");
+                System.out.println("0.No\n1.Yes\n");
+                int isContinuingToRegister = usrIn.nextInt();
+                if(isContinuingToRegister == 0) {
+                    isRegistrationComplete = true;
+                    break;
+                }
+                for(int i = 0; i < offeredCourses.size(); i++) {
+                    System.out.println(i + "." + offeredCourses.get(i).toString() + "\n");
+                }
+                System.out.println(registeredCourses);
+                System.out.println("Done");
             }
 
 

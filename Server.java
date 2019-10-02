@@ -69,7 +69,10 @@ class Connection extends Thread {
         String successMessage = null;
         try {
             while(true) {
-                semester = ois.readUTF();
+                semester = in.readLine();
+                if (semester.equals(null)) {
+                    continue;
+                }
                 if(semester.equals("Fall")) {
                     fallClasses.add("COMM 1050U - Technical Communications");
                     fallClasses.add("ENGR 1015U - Introduction to Engineering");
