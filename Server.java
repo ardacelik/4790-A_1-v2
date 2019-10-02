@@ -31,6 +31,9 @@ public class Server {
 }
 
 class Connection extends Thread {
+
+    private static final String path = "./StudentInfo/";
+    
     ArrayList<String> fallClasses = new ArrayList<String>();
     ArrayList<String> winterClasses = new ArrayList<String>();
 
@@ -39,7 +42,7 @@ class Connection extends Thread {
     private BufferedReader in = null;
     private ObjectInputStream ois = null;
     private ObjectOutputStream oos = null;
-
+    
     public Connection(Socket s) { // constructor
        client = s;
     
@@ -68,6 +71,7 @@ class Connection extends Thread {
         ArrayList<String> courses = null;
         String successMessage = null;
         try {
+
             while(true) {
                 semester = in.readLine();
                 if (semester.equals(null)) {
@@ -107,6 +111,7 @@ class Connection extends Thread {
             for(int i = 0; i < courses.size(); i++) {
                 System.out.println(courses.get(i));
             }
+            saveStudentToFile(x);
             ois.close();
             oos.close();
             client.close(); 
@@ -114,5 +119,25 @@ class Connection extends Thread {
             System.out.println("Exception caught...");
             System.out.println(e.getMessage());
         }
+    }
+
+    public void saveStudentToFile(Student s) {
+        try {
+
+            File file = new File(path);
+            boolean created = file.mkdir();
+
+            if(created) {
+                ObjectOutputStream oosf = new ObjectOutputStream(new FileOutputStream(path + s.getStudentId() + ".txt"));
+                oosf.writeObject(s);
+                oosf.close();
+            } else {
+                System.out.println("Failed to create the directory");
+            }            
+            
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
+        
     }
 }
