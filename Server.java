@@ -1,6 +1,11 @@
 import java.net.*;
 import java.util.ArrayList;
 import java.io.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import javax.imageio.*;
+import javax.swing.*;
+
  
 public class Server {
     public static void main(String[] args) {
@@ -125,19 +130,41 @@ class Connection extends Thread {
         try {
 
             File file = new File(path);
-            boolean created = file.mkdir();
-
-            if(created) {
-                ObjectOutputStream oosf = new ObjectOutputStream(new FileOutputStream(path + s.getStudentId() + ".txt"));
-                oosf.writeObject(s);
-                oosf.close();
-            } else {
-                System.out.println("Failed to create the directory");
-            }            
-            
+            ObjectOutputStream oosf = new ObjectOutputStream(new FileOutputStream(path + s.getStudentId() + ".txt"));
+            oosf.writeObject(s);
+            oosf.close();
+            new ImageViewer();
+                        
         } catch (Exception e) {
             //TODO: handle exception
         }
         
+    }
+}
+
+class ImageViewer {
+    public ImageViewer() {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                JFrame frame = new JFrame("Image Viewer");
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                BufferedImage img = null;
+
+                try {
+                    img = ImageIO.read(getClass().getResource("DR.Q.jpg"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+
+                ImageIcon imgIcon = new ImageIcon(img);
+                JLabel lbl = new JLabel();
+                lbl.setIcon(imgIcon);
+                frame.getContentPane().add(lbl, BorderLayout.CENTER);
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
     }
 }
