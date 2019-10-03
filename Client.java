@@ -6,18 +6,18 @@ import java.util.ArrayList;
 public class Client {
     public static void main(String[] args) {
          
-        // if (args.length != 2) {
-        //     System.err.println(
-        //         "Usage: java Client <host name> <port number>");
-        //     System.exit(1);
-        // }
+        if (args.length != 2) {
+            System.err.println(
+                "Usage: java Client <host name> <port number>");
+            System.exit(1);
+        }
  
-        // String hostName = args[0];
-        // int portNumber = Integer.parseInt(args[1]);
+         String hostName = args[0];
+         int portNumber = Integer.parseInt(args[1]);
 
         // ------ During development only!!! --------
-        String hostName = "127.0.0.1";
-        int portNumber = 5000;
+        //String hostName = "127.0.0.1";
+        //int portNumber = 5000;
 
         String studentId;
         String semester;

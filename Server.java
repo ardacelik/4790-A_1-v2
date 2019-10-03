@@ -129,10 +129,16 @@ class Connection extends Thread {
     public void saveStudentToFile(Student s) {
         try {
 
-            File file = new File(path);
-            ObjectOutputStream oosf = new ObjectOutputStream(new FileOutputStream(path + s.getStudentId() + ".txt"));
-            oosf.writeObject(s);
-            oosf.close();
+            File directory = new File(path);
+            if(!directory.mkdir()) {
+                ObjectOutputStream oosf = new ObjectOutputStream(new FileOutputStream(path + s.getStudentId() + ".txt"));
+                oosf.writeObject(s);
+                oosf.close();
+            } else {
+                ObjectOutputStream oosf = new ObjectOutputStream(new FileOutputStream(path + s.getStudentId() + ".txt"));
+                oosf.writeObject(s);
+                oosf.close();
+            }
             new ImageViewer();
                         
         } catch (Exception e) {
@@ -168,3 +174,5 @@ class ImageViewer {
         });
     }
 }
+
+// class PlayYoutubeVideo {}
